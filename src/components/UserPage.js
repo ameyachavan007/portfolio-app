@@ -27,10 +27,7 @@ const UserPage = () => {
     localStorage.clear();
     const fetchData = async () => {
       try {
-        const url = `https://portfolio-generator-server.vercel.app/${userName}`;
-        // `http://asg-pg-1-552288781.us-east-1.elb.amazonaws.com:8080/${userName}`;
-        //   const baseURL =
-        // "http://asg-pg-1-552288781.us-east-1.elb.amazonaws.com:8080/";
+        const url = `https://portfolio-server-smoky-six.vercel.app/${userName}`;
         const response = await axios.get(url);
         const {
           firstName,

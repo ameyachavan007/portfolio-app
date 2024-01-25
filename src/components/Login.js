@@ -53,9 +53,7 @@ const Login = () => {
       setError("Password must be at least 8 characters.");
       return;
     }
-    const loginURL = "https://portfolio-generator-server.vercel.app/";
-    // "http://asg-pg-1-552288781.us-east-1.elb.amazonaws.com:8080/";
-    // const loginURL = "http://localhost:8080/";
+    const loginURL = "https://portfolio-server-smoky-six.vercel.app/";
     try {
       const hashedPassword = CryptoJS.SHA256(password).toString();
 

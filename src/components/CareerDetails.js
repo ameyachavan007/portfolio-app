@@ -146,10 +146,9 @@ const CareerDetails = () => {
     return updatedFields;
   };
 
-  // const baseURL = "http://localhost:8080/career-details";
+ 
   const baseURL =
-    "https://portfolio-generator-server.vercel.app/career-details";
-  // "http://asg-pg-1-552288781.us-east-1.elb.amazonaws.com:8080/career-details";
+    "https://portfolio-server-smoky-six.vercel.app/career-details";
   const handleSubmit = async (data) => {
     const updatedFields = getUpdatedData(userDataRedux, data);
     try {

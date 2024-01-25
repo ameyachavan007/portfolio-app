@@ -26,9 +26,7 @@ const SignUp = () => {
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
 
-  // const baseURL = "http://localhost:8080";
-  const baseURL = "https://portfolio-generator-server.vercel.app/";
-  // "http://asg-pg-1-552288781.us-east-1.elb.amazonaws.com:8080/";
+  const baseURL = "https://portfolio-server-smoky-six.vercel.app";
   const emailChangeHandler = (event) => {
     setEmail(event.target.value);
   };
