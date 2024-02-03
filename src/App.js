@@ -25,6 +25,11 @@ const App = () => {
     return user ? children : null;
   };
 
+  
+  useEffect(()=>{
+    document.title = "Portfolio App";
+  }, []);
+
   return (
     <AuthProvider>
       <div className="App">

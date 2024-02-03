@@ -1,21 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, Grid, Chip } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { formatDate } from "../shared/CustomComponents";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Experiences = () => {
-  const dispatch = useDispatch();
+  const { userName } = useParams();
+  const history = useNavigate();
+  // const baseURL = `http://localhost:8080/${userName}/experiences`;
+  const baseURL = `https://portfolio-server-smoky-six.vercel.app/${userName}/experiences`;
   const [experiences, setExperiences] = useState([]);
 
-  // redux vars
-  const userData = useSelector((state) => state.userData);
-  // const experiencesRedux = useSelector((state) => state.userData.experiences);
-
   useEffect(() => {
-    const experiences =
-      JSON.parse(localStorage.getItem("all-experiences")) || [];
-    setExperiences(experiences);
+    const fetchData = async () => {
+      try {
+        let response = await axios.get(baseURL);
+        setExperiences(JSON.parse(response.data.experiences));
+      } catch (error) {
+        console.log("Error in fetching experiences data: ", error);
+        if (error.response &&
+          error.response.data &&
+          error.response.data.error === "Projects data not found for the user"){
+            history(`/${userName}`);
+          }
+      }
+    } 
+    fetchData();
   }, []);
 
   const getSkills = (exp) => {

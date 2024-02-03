@@ -1,17 +1,33 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 
 const About = () => {
+  const history = useNavigate();
+  const { userName } = useParams();
+  // const baseURL = `http://localhost:8080/${userName}/about`
+  const baseURL = `https://portfolio-server-smoky-six.vercel.app/${userName}/about`;
   const [aboutData, setAboutData] = useState("");
 
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
 
   useEffect(() => {
-    const about = localStorage.getItem("about");
-    if (about) {
-      setAboutData(about);
-    }
+    const fetchData = async () => {
+      try {
+        let response = await axios.get(baseURL);
+        setAboutData(response.data.about);
+      } catch (error) {
+        console.log("Error in fetching about data: ", error);
+        if (error.response &&
+          error.response.data &&
+          error.response.data.error === "About data not found for the user"){
+            history(`/${userName}`);
+          }
+      }
+    } 
+    fetchData();
   }, []);
 
   return (
