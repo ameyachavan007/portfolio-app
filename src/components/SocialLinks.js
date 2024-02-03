@@ -5,36 +5,48 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { Stack, Box, CircularProgress } from "@mui/material";
-
-// get links from localstorage and display icons for all avaiable links
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const SocialLinks = () => {
-  const [githubLink, setGithubLink] = useState("");
-  const [instagramLink, setInstagramLink] = useState("");
-  const [twitterLink, setTwitterLink] = useState("");
-  const [linkedInLink, setLinkedInLink] = useState("");
-  const [sLinks, setSLinks] = useState([]);
+  const history = useNavigate();
+  const { userName } = useParams();
+  // const baseURL = `http://localhost:8080/${userName}/social-links`;
+  const baseURL = `https://portfolio-server-smoky-six.vercel.app/${userName}/social-links`;
+  const [sLinks, setSLinks] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const links = [
-      { icon: <GitHubIcon />, link: localStorage.getItem("github-link") || "" },
-      {
-        icon: <InstagramIcon />,
-        link: localStorage.getItem("instagram-link") || "",
-      },
-      {
-        icon: <TwitterIcon />,
-        link: localStorage.getItem("twitter-link") || "",
-      },
-      {
-        icon: <LinkedInIcon />,
-        link: localStorage.getItem("linkedin-link") || "",
-      },
-    ];
-
-    setSLinks(links.filter((sLink) => sLink.link !== "undefined"));
+    const fetchData = async () => {
+      try {
+        let response = await axios.get(baseURL);
+        setSLinks(response.data.socialLinks);
+      } catch (error) {
+        console.log("Error in fetching about data: ", error);
+        if (error.response &&
+          error.response.data &&
+          error.response.data.error === "Links data not found for the user"){
+            history(`/${userName}`);
+          }
+      }
+    } 
+    fetchData();
   }, []);
+
+  const getIcon = (key) => {
+    switch (key) {
+      case "github":
+          return <GitHubIcon />;
+      case "twitter":
+        return <TwitterIcon />;
+      case "instagram":
+        return <InstagramIcon />;
+      case "linkedin":
+        return <LinkedInIcon />;
+      default:
+        break;
+    }
+  }
 
   if (isLoading) {
     return (
@@ -51,17 +63,19 @@ const SocialLinks = () => {
 
   return (
     <Stack spacing={1} direction="row" sx={{ position: "absolute", bottom: 0 }}>
-      {sLinks.map((sLink, index) => (
-        <IconButton
-          key={index}
+        {Object.entries(sLinks).map(([key, value]) => (
+          value && (
+            <IconButton
+          key={key}
           style={{ color: "#E2E8F0" }}
-          onClick={() => window.open(sLink.link, "_blank")}
+          onClick={() => window.open(value, "_blank")}
         >
-          {sLink.icon}
+          {getIcon(key)}
         </IconButton>
-      ))}
+          )
+        ))}
     </Stack>
   );
-};
+}
 
 export default SocialLinks;
