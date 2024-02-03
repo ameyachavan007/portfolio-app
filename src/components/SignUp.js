@@ -26,9 +26,8 @@ const SignUp = () => {
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
 
-  // const baseURL = "http://localhost:8080";
-  const baseURL = "https://portfolio-generator-server.vercel.app/";
-  // "http://asg-pg-1-552288781.us-east-1.elb.amazonaws.com:8080/";
+  // const baseURL = "https://portfolio-server-smoky-six.vercel.app";
+  const baseURL = "http://localhost:8080";
   const emailChangeHandler = (event) => {
     setEmail(event.target.value);
   };
@@ -86,37 +85,8 @@ const SignUp = () => {
       });
       const { message } = response.data;
       if (message === "SignUp successful") {
-        const user = { email: email };
-        localStorage.removeItem("email");
-        localStorage.removeItem("password");
-        localStorage.removeItem("first-name");
-        localStorage.removeItem("last-name");
-        localStorage.removeItem("about");
-        localStorage.removeItem("all-experiences");
-        localStorage.removeItem("all-projects");
-        localStorage.removeItem("github-link");
-        localStorage.removeItem("twitter-link");
-        localStorage.removeItem("instagram-link");
-        localStorage.removeItem("linkedin-link");
-        localStorage.removeItem("tag-line");
-        dispatch(
-          setAllDetails({
-            email: email,
-            username: username,
-            password: hashedPassword,
-            firstName: null,
-            lastName: null,
-            about: null,
-            experiences: null,
-            projects: null,
-            github: null,
-            linkedin: null,
-            twitter: null,
-            instagram: null,
-            tagLine: null,
-          })
-        );
-        login(user);
+        
+        login({username: username, email: email, password: password});
       }
       history("/career-details");
     } catch (error) {

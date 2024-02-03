@@ -20,64 +20,18 @@ const UserPage = () => {
   const [tag, setTag] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  const url = `http://localhost:8080/${userName}`;
+  // const url = `http://localhost:8080/${userName}`;
 
   useEffect(() => {
-    // Clear previous user details
-    localStorage.clear();
     const fetchData = async () => {
       try {
-        const url = `https://portfolio-generator-server.vercel.app/${userName}`;
-        // `http://asg-pg-1-552288781.us-east-1.elb.amazonaws.com:8080/${userName}`;
-        //   const baseURL =
-        // "http://asg-pg-1-552288781.us-east-1.elb.amazonaws.com:8080/";
+        const url = `https://portfolio-server-smoky-six.vercel.app/${userName}`;
         const response = await axios.get(url);
         const {
           firstName,
           lastName,
-          about,
-          experiences,
-          username,
-          email,
-          password,
-          projects,
-          github,
-          instagram,
-          twitter,
-          linkedin,
           tagLine,
         } = response.data.user;
-
-        // Set local storage items
-        localStorage.setItem("first-name", firstName);
-        localStorage.setItem("last-name", lastName);
-        localStorage.setItem("about", about);
-        localStorage.setItem("all-experiences", experiences);
-        localStorage.setItem("all-projects", projects);
-        localStorage.setItem("github-link", github);
-        localStorage.setItem("twitter-link", twitter);
-        localStorage.setItem("instagram-link", instagram);
-        localStorage.setItem("linkedin-link", linkedin);
-        localStorage.setItem("tag-line", tagLine);
-
-        // Dispatch action to set details
-        dispatch(
-          setAllDetails({
-            firstName,
-            lastName,
-            about,
-            experiences,
-            username,
-            email,
-            password,
-            projects,
-            github,
-            instagram,
-            twitter,
-            linkedin,
-            tagLine,
-          })
-        );
 
         // Set states
         setFirstName(firstName);
