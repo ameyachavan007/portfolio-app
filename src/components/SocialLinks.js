@@ -12,7 +12,7 @@ const SocialLinks = () => {
   const history = useNavigate();
   const { userName } = useParams();
   // const baseURL = `http://localhost:8080/${userName}/social-links`;
-  const baseURL = `https://portfolio-server-smoky-six.vercel.app//${userName}/social-links`;
+  const baseURL = `https://portfolio-server-smoky-six.vercel.app/${userName}/social-links`;
   const [sLinks, setSLinks] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
