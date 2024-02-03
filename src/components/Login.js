@@ -54,70 +54,15 @@ const Login = () => {
       return;
     }
     const loginURL = "https://portfolio-server-smoky-six.vercel.app/";
+    // const loginURL = "http://localhost:8080/";
     try {
       const hashedPassword = CryptoJS.SHA256(password).toString();
 
       await axios.post(loginURL, { email, hashedPassword }).then((res) => {
-        const {
-          firstName,
-          lastName,
-          about,
-          experiences,
-          username,
-          email,
-          password,
-          projects,
-          github,
-          instagram,
-          twitter,
-          linkedin,
-          tagLine,
-        } = res.data.user;
-
-        dispatch(
-          setAllDetails({
-            email: email,
-            password: password,
-            firstName: firstName,
-            lastName: lastName,
-            experiences: experiences,
-            about: about,
-            username: username,
-            projects: projects,
-            github: github,
-            instagram: instagram,
-            twitter: twitter,
-            linkedin: linkedin,
-            tagLine: tagLine,
-          })
-        );
-        localStorage.removeItem("email");
-        localStorage.removeItem("password");
-        localStorage.removeItem("first-name");
-        localStorage.removeItem("last-name");
-        localStorage.removeItem("about");
-        localStorage.removeItem("all-experiences");
-        localStorage.removeItem("all-projects");
-        localStorage.removeItem("github-link");
-        localStorage.removeItem("twitter-link");
-        localStorage.removeItem("instagram-link");
-        localStorage.removeItem("linkedin-link");
-        localStorage.removeItem("tag-line");
-
-        localStorage.setItem("first-name", firstName);
-        localStorage.setItem("last-name", lastName);
-        localStorage.setItem("about", about);
-        localStorage.setItem("all-experiences", experiences);
-        localStorage.setItem("all-projects", projects);
-        localStorage.setItem("github-link", github);
-        localStorage.setItem("twitter-link", twitter);
-        localStorage.setItem("instagram-link", instagram);
-        localStorage.setItem("linkedin-link", linkedin);
-        localStorage.setItem("tag-line", tagLine);
-
+        const {user} = res.data;
         // Redirect
-        login({ firstName: "hehehe" });
-        history(`/${username}`);
+        login(user);
+        history(`/${user.username}`);
       });
       setEmail("");
       setPassword("");

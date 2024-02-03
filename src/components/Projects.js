@@ -1,12 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Grid, Chip } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const Projects = () => {
+  const { userName } = useParams();
+  const history = useNavigate();
+  // const baseURL = `http://localhost:8080/${userName}/projects`;
+  const baseURL = `https://portfolio-server-smoky-six.vercel.app/${userName}/projects`;
   const [projects, setProjects] = useState([]);
+
   useEffect(() => {
-    const projects = JSON.parse(localStorage.getItem("all-projects")) || [];
-    setProjects(projects);
+    const fetchData = async () => {
+      try {
+        let response = await axios.get(baseURL);
+        setProjects(JSON.parse(response.data.projects));
+      } catch (error) {
+        console.log("Error in fetching projects data: ", error);
+        if (error.response &&
+          error.response.data &&
+          error.response.data.error === "Projects data not found for the user"){
+            history(`/${userName}`);
+          }
+      }
+    } 
+    fetchData();
   }, []);
 
   const getSkills = (skills) => {

@@ -45,16 +45,6 @@ const CareerDetails = () => {
   const emailRedux = useSelector((state) => state.userData.email);
   const passwordRedux = useSelector((state) => state.userData.password);
   const usernameRedux = useSelector((state) => state.userData.username);
-  const firstNameRedux = useSelector((state) => state.userData.firstName);
-  const lastNameRedux = useSelector((state) => state.userData.lastName);
-  const aboutRedux = useSelector((state) => state.userData.about);
-  const experiencesRedux = useSelector((state) => state.userData.experiences);
-  const projectsRedux = useSelector((state) => state.userData.projects);
-  const githubRedux = useSelector((state) => state.userData.github);
-  const instaRedux = useSelector((state) => state.userData.instagram);
-  const linkedinRedux = useSelector((state) => state.userData.linkedin);
-  const twitterRedux = useSelector((state) => state.userData.twitter);
-  const tagRedux = useSelector((state) => state.userData.tagLine);
   const [activeStep, setActiveStep] = useState(0);
   const [error, setError] = useState("");
 
@@ -117,19 +107,28 @@ const CareerDetails = () => {
   });
 
   useEffect(() => {
-    if (!usernameRedux || usernameRedux !== "") {
-      form.reset({
-        firstName: firstNameRedux,
-        lastName: lastNameRedux,
-        about: aboutRedux,
-        experiences: JSON.parse(experiencesRedux),
-        projects: JSON.parse(projectsRedux),
-        github: githubRedux,
-        twitter: twitterRedux,
-        linkedin: linkedinRedux,
-        instagram: instaRedux,
-        tagLine: tagRedux,
-      });
+    if (user) {
+      const fetchData = async () => {
+        try {
+          let response = await axios.get(`http://localhost:8080/${user.username}/career-details`);
+          form.reset({
+            firstName: response.data.user.firstName,
+            lastName: response.data.user.lastName,
+            about: response.data.user.about,
+            experiences: JSON.parse(response.data.user.experiences),
+            projects: JSON.parse(response.data.user.projects),
+            github: response.data.user.github,
+            twitter: response.data.user.twitter,
+            linkedin: response.data.user.linkedin,
+            instagram: response.data.user.instagram,
+            tagLine: response.data.user.tagLine,
+          });
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      fetchData();
+      
     }
   }, []);
 
@@ -149,39 +148,46 @@ const CareerDetails = () => {
  
   const baseURL =
     "https://portfolio-server-smoky-six.vercel.app/career-details";
+    // "http://localhost:8080/career-details";
   const handleSubmit = async (data) => {
-    const updatedFields = getUpdatedData(userDataRedux, data);
+    let userdata = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      about: user.about,
+      email: user.email,
+      experiences: user.experiences ? JSON.parse(user.experiences) : [],
+      username: user.username,
+      projects: user.projects ? JSON.parse(user.projects) : [],
+      github: user.github,
+      instagram: user.instagram,
+      twitter: user.twitter,
+      linkedin: user.linkedin,
+      tagLine: user.tagLine,
+    }
+    const updatedFields = getUpdatedData(userdata, data);
+
+    console.log("=====updated user=========", {
+      username: user.username,
+      email: user.email,
+      password: user.password,
+      ...updatedFields,
+    })
+
     try {
       const response = await axios.post(baseURL, {
         user: {
-          username: usernameRedux,
-          email: emailRedux,
-          password: passwordRedux,
+          username: user.username,
+          email: user.email,
+          password: user.password,
           ...updatedFields,
         },
       });
-      const { firstName, lastName, about, experiences } = response.data.user;
-      dispatch(
-        setAllDetails({
-          firstName,
-          lastName,
-          about,
-          experiences,
-          usernameRedux,
-          emailRedux,
-          passwordRedux,
-        })
-      );
-      localStorage.setItem("username", usernameRedux);
-      localStorage.setItem("first-name", firstName);
-      localStorage.setItem("last-name", lastName);
-      localStorage.setItem("about", about);
-      localStorage.setItem("all-experiences", experiences);
+      const { updatedUser } = response.data;
 
-      if (firstName || firstName !== "") {
-        login({ firstName: firstName });
+      if (updatedUser.firstName && updatedUser.firstName !== "") {
+        login(updatedUser);
       }
-      history(`/${usernameRedux}`);
+      history(`/${updatedUser.username}`);
     } catch (err) {
       console.error(
         "Error sending career details to server",
