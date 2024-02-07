@@ -145,27 +145,27 @@ export const GlassyStepper = styled(Stepper)(({ theme }) => ({
   backdropFilter: "blur(10px)",
   borderRadius: "10px",
   padding: "10px",
-  margin: "1rem",
+  // margin: "1rem",
   width: "auto",
   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  // Responsive styles
-  [theme.breakpoints.down("xs")]: {
-    flexDirection: "column",
-    p: "5px",
-    "& .MuiStepIcon-root": {
-      width: "20px",
-      height: "20px",
-    },
-    "& .MuiSvgIcon-root": {
-      fontSize: "1rem",
-    },
-    "& .MuiStepIcon-root": {
-      fontSize: "1rem",
-    },
-    "& .MuiStepLabel-label": {
-      fontSize: "0.75rem",
-    },
-  },
+  // // Responsive styles
+  // [theme.breakpoints.down("xs")]: {
+  //   flexDirection: "column",
+  //   p: "5px",
+  //   "& .MuiStepIcon-root": {
+  //     width: "20px",
+  //     height: "20px",
+  //   },
+  //   "& .MuiSvgIcon-root": {
+  //     fontSize: "1rem",
+  //   },
+  //   "& .MuiStepIcon-root": {
+  //     fontSize: "1rem",
+  //   },
+  //   "& .MuiStepLabel-label": {
+  //     fontSize: "0.75rem",
+  //   },
+  // },
 }));
 
 export const GlassyBackground = styled(Box)({
@@ -174,7 +174,8 @@ export const GlassyBackground = styled(Box)({
   borderRadius: "10px",
   padding: "20px",
   margin: "10px 0",
-  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)", // Adjust shadow blur and spread here
+  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+  overflow: 'hidden',
 });
 
 export const StyledButton = styled(Button)({

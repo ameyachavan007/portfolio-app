@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Typography, Grid, Box, useMediaQuery, useTheme } from "@mui/material";
 import { InputTextField, StyledButton } from "../shared/CustomComponents";
 import { useAuth } from "../utils/auth";
-import { useDispatch } from "react-redux";
-import { setAllDetails } from "../redux/userSlice";
+import "../assets/css/Login.css"; 
+import PAGE_HEADINGS from "../assets/constants";
 import Tooltip from "@mui/material/Tooltip";
 import CryptoJS from "crypto-js";
 import { GlassyBackground } from "../shared/CustomComponents";
@@ -14,7 +14,6 @@ import { GlassyBackground } from "../shared/CustomComponents";
 const SignUp = () => {
   const history = useNavigate();
   const { login } = useAuth();
-  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -165,12 +164,22 @@ const SignUp = () => {
               variant="h4"
               sx={{
                 color: "white",
-                mb: "5rem",
                 textAlign: "center",
+                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" },
               }}
             >
-              SignUp Page
+              {PAGE_HEADINGS.SIGN_UP}
             </Typography>
+            <Typography
+            variant="subtitle2"
+            sx={{
+              color: "#8F9DB3",
+              mb: 4,
+              textAlign: "center",
+            }}
+          >
+            {PAGE_HEADINGS.SIGN_UP_SUB}
+          </Typography>
           </Grid>
           <Grid item>
             {error && (
@@ -256,29 +265,12 @@ const SignUp = () => {
               </form>
             </GlassyBackground>
           </Grid>
-          <Grid item>
-            <Typography
-              variant="h6"
-              sx={{
-                color: "white",
-                mb: "5rem",
-                textAlign: "center",
-              }}
-            >
-              OR
-            </Typography>
-          </Grid>
-          <Grid item alignSelf={"center"}>
+          <Grid item alignSelf={"center"} sx={{mt: 3}}>
             <Link
               to="/"
-              style={{
-                color: "#fff",
-                textDecoration: "none",
-                border: "1px solid white",
-                padding: "1rem",
-              }}
+              className="links"
             >
-              Log In!
+              Already a User? Log In!
             </Link>
           </Grid>
         </Grid>

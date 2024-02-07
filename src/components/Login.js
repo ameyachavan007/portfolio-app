@@ -1,22 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setAllDetails } from "../redux/userSlice";
-import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box, useTheme, useMediaQuery  } from "@mui/material";
 import {
   InputTextField,
   StyledButton,
   GlassyBackground,
 } from "../shared/CustomComponents";
 import CryptoJS from "crypto-js";
-import { useTheme, useMediaQuery } from "@mui/material";
 import { useAuth } from "../utils/auth";
+import PAGE_HEADINGS from "../assets/constants";
+import "../assets/css/Login.css"; 
 
 const Login = () => {
-  // redux vars
-  const dispatch = useDispatch();
-  // const baseURL = "asg-pg-1-552288781.us-east-1.elb.amazonaws.com";\
   const { login } = useAuth();
 
   const history = useNavigate();
@@ -115,6 +111,8 @@ const Login = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        // background:'linear-gradient(to right bottom, #430089, #82ffa1)'
+        background: 'linear-gradient(to right bottom, #1C2336, #0F172A)'
       }}
     >
       <Grid container xs={10} sm={8} md={6} lg={4} direction={"column"}>
@@ -123,21 +121,31 @@ const Login = () => {
             variant="h4"
             sx={{
               color: "white",
-              mb: 4,
+              // mb: 4,
               textAlign: "center",
               fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" },
             }}
           >
-            Login Page
+            {PAGE_HEADINGS.LOGIN}
+          </Typography>
+          <Typography
+            variant="subtitle2"
+            sx={{
+              color: "#8F9DB3",
+              mb: 4,
+              textAlign: "center",
+              // fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" },
+            }}
+          >
+            {PAGE_HEADINGS.LOGIN_SUB}
           </Typography>
         </Grid>
         <Grid item>
           {error && (
             <div
               className="error"
-              style={{ color: "red", marginBottom: "1rem" }}
             >
-              {JSON.stringify(error)}
+              {error}
             </div>
           )}
           <GlassyBackground>
@@ -178,29 +186,12 @@ const Login = () => {
             </form>
           </GlassyBackground>
         </Grid>
-        <Grid item>
-          <Typography
-            variant="h6"
-            sx={{
-              color: "white",
-              mb: "5rem",
-              textAlign: "center",
-            }}
-          >
-            OR
-          </Typography>
-        </Grid>
-        <Grid item alignSelf={"center"}>
+        <Grid item alignSelf={"center"} sx={{mt: 3}}>
           <Link
             to="/signup"
-            style={{
-              color: "#fff",
-              textDecoration: "none",
-              border: "1px solid white",
-              padding: "1rem",
-            }}
+            className="links"
           >
-            Sign Up!
+            New User? Create Account
           </Link>
         </Grid>
       </Grid>

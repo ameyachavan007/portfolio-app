@@ -110,7 +110,7 @@ const CareerDetails = () => {
     if (user) {
       const fetchData = async () => {
         try {
-          let response = await axios.get(`http://localhost:8080/${user.username}/career-details`);
+          let response = await axios.get(`https://portfolio-server-smoky-six.vercel.app/${user.username}/career-details`);
           form.reset({
             firstName: response.data.user.firstName,
             lastName: response.data.user.lastName,
@@ -244,6 +244,7 @@ const CareerDetails = () => {
   const PersonalDetailsForm = () => {
     const { control } = useFormContext();
     return (
+    <Box sx={{ overflowY: 'auto', scrollbarWidth: "0",}}>
       <GlassyBackground>
         <Controller
           control={control}
@@ -351,7 +352,7 @@ const CareerDetails = () => {
             </Tooltip>
           )}
         />
-        <Controller
+        {/* <Controller
           control={control}
           name="instagram"
           rules={{
@@ -372,7 +373,7 @@ const CareerDetails = () => {
               />
             </Tooltip>
           )}
-        />
+        /> */}
         <Controller
           control={control}
           name="twitter"
@@ -418,6 +419,7 @@ const CareerDetails = () => {
           )}
         />
       </GlassyBackground>
+      </Box>
     );
   };
 
@@ -863,7 +865,6 @@ const CareerDetails = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: isSmallScreen ? "space-between" : "center",
-          // position: "relative",
           mb: isSmallScreen ? 2 : 5,
           mt: isSmallScreen ? 2 : 5,
         }}
@@ -905,6 +906,7 @@ const CareerDetails = () => {
       )}
       <Container>
         <GlassyStepper
+
           activeStep={activeStep}
           orientation={isSmallScreen ? "vertical" : "horizontal"}
         >
@@ -919,6 +921,7 @@ const CareerDetails = () => {
             height: isSmallScreen ? "auto" : "50vh",
             overflowY: "auto",
             width: "auto",
+            mt:1
           }}
         >
           {activeStep === steps.length ? (
