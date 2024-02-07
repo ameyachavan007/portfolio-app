@@ -10,6 +10,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { AuthProvider } from "./utils/auth";
 import { useAuth } from "./utils/auth";
 import { useEffect } from "react";
+import NotFound from "./components/NotFound";
 
 const App = () => {
   const ProtectedRoute = ({ children }) => {
@@ -51,6 +52,7 @@ const App = () => {
             <Route path="experience" element={<Experiences />} />
             <Route path="projects" element={<Projects />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </AuthProvider>

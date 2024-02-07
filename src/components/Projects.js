@@ -103,6 +103,7 @@ const Projects = () => {
                     : "Completed"}
                 </Box>
                 <Box sx={{ flex: "1 1 auto" }}></Box>
+                {project.projectLink !== "#" && (
                 <Box>
                   <a
                     style={{ textDecoration: "underline", fontWeight: "500" }}
@@ -116,6 +117,7 @@ const Projects = () => {
                     />
                   </a>
                 </Box>
+                )}
               </Box>
             </Grid>
             <Grid item xs={12}>

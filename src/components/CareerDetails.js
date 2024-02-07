@@ -598,7 +598,7 @@ const CareerDetails = () => {
                     <Tooltip title="Please enter a link for your project">
                       <InputTextField
                         label="Project Link"
-                        placeholder="Enter the link to your project..."
+                        placeholder="Enter the link to your project...if N/A then enter '#'"
                         fullWidth
                         margin="normal"
                         error={!!error}
@@ -635,9 +635,15 @@ const CareerDetails = () => {
                   )}
                 />
 
-                <StyledButton onClick={() => removeProject(index)}>
-                  Remove Project
-                </StyledButton>
+                {index === 0 ? (
+                                <StyledButton onClick={() => removeProject(index)} disabled>
+                                    Remove Project
+                                </StyledButton>
+                            ) : (
+                                <StyledButton onClick={() => removeProject(index)}>
+                                    Remove Project
+                                </StyledButton>
+                )}
               </Box>
             </GlassyBackground>
           );
@@ -818,9 +824,15 @@ const CareerDetails = () => {
 
               {renderResponsibilities(index)}
 
-              <StyledButton onClick={() => removeExperience(index)}>
-                Remove Experience
-              </StyledButton>
+              {index === 0 ? (
+                                <StyledButton onClick={() => removeProject(index)} disabled>
+                                    Remove Experience
+                                </StyledButton>
+                            ) : (
+                                <StyledButton onClick={() => removeProject(index)}>
+                                    Remove Experience
+                                </StyledButton>
+                )}
             </Box>
           </GlassyBackground>
         ))}
