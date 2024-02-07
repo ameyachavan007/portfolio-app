@@ -166,13 +166,6 @@ const CareerDetails = () => {
     }
     const updatedFields = getUpdatedData(userdata, data);
 
-    console.log("=====updated user=========", {
-      username: user.username,
-      email: user.email,
-      password: user.password,
-      ...updatedFields,
-    })
-
     try {
       const response = await axios.post(baseURL, {
         user: {
