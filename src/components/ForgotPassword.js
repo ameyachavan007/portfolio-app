@@ -25,8 +25,8 @@ const ForgotPassword = () => {
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
 
-  // const baseURL = "https://portfolio-server-smoky-six.vercel.app";
-  const baseURL = "http://localhost:8080";
+  const baseURL = "https://portfolio-server-smoky-six.vercel.app";
+  // const baseURL = "http://localhost:8080";
   const emailChangeHandler = (event) => {
     setEmail(event.target.value);
   };
