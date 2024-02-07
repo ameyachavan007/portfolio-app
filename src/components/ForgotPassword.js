@@ -11,7 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import CryptoJS from "crypto-js";
 import { GlassyBackground } from "../shared/CustomComponents";
 
-const SignUp = () => {
+const ForgotPassword = () => {
   const history = useNavigate();
   const { login } = useAuth();
 
@@ -25,8 +25,8 @@ const SignUp = () => {
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
 
-  const baseURL = "https://portfolio-server-smoky-six.vercel.app";
-  // const baseURL = "http://localhost:8080";
+  // const baseURL = "https://portfolio-server-smoky-six.vercel.app";
+  const baseURL = "http://localhost:8080";
   const emailChangeHandler = (event) => {
     setEmail(event.target.value);
   };
@@ -56,7 +56,6 @@ const SignUp = () => {
   };
 
   const handleSubmit = async (event) => {
-    
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
@@ -77,18 +76,19 @@ const SignUp = () => {
       setError("Password must be at least 8 characters.");
       return;
     }
-
     try {
-      const response = await axios.post(`${baseURL}/signup`, {
+      const response = await axios.post(`${baseURL}/forgot-password`, {
         email,
         username,
+        password :CryptoJS.SHA256(password).toString() ,
       });
       const { message } = response.data;
-      if (message === "SignUp successful") {
-        
-        login({username: username, email: email, password: CryptoJS.SHA256(password).toString()});
+      if (message === "Password updated successfully") {
+        setTimeout(() => {
+          history("/");
+        }, 2000); 
       }
-      history("/career-details");
+      
     } catch (error) {
       console.error(error);
       // Check if the error is due to user not found
@@ -105,13 +105,13 @@ const SignUp = () => {
       } else if (
         error.response &&
         error.response.data &&
-        error.response.data.error === "Username already exists"
+        error.response.data.error === "User not found"
       ) {
         setUsername("");
         setEmail("");
         setPassword("");
         setConfirmPassword("");
-        setError("Username already exists, please try a different username...");
+        setError("Username and Email combination is invalid...");
       } else {
         // Handle other errors
         setError("An error occurred. Please try again.");
@@ -170,7 +170,7 @@ const SignUp = () => {
                 fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" },
               }}
             >
-              {PAGE_HEADINGS.SIGN_UP}
+              {PAGE_HEADINGS.FP}
             </Typography>
             <Typography
             variant="subtitle2"
@@ -180,7 +180,7 @@ const SignUp = () => {
               textAlign: "center",
             }}
           >
-            {PAGE_HEADINGS.SIGN_UP_SUB}
+            {PAGE_HEADINGS.FP_SUB}
           </Typography>
           </Grid>
           <Grid item>
@@ -189,7 +189,7 @@ const SignUp = () => {
                 className="error"
                 style={{ color: "red", marginBottom: "1rem" }}
               >
-                {JSON.stringify(error)}
+                {error}
               </div>
             )}
             <GlassyBackground>
@@ -229,14 +229,14 @@ const SignUp = () => {
                     label="Password"
                     onChange={passwordChangeHandler}
                     margin="normal"
-                    placeholder="Enter your password here..."
+                    placeholder="Enter your new password here..."
                     InputProps={{
                       style: { color: "white" },
                     }}
                     fullWidth
                   />
                 </Tooltip>
-                <Tooltip title="Re-enter your password to confirm.">
+                <Tooltip title="Re-enter your new password to confirm.">
                   <InputTextField
                     type="password"
                     value={confirmPassword}
@@ -267,18 +267,11 @@ const SignUp = () => {
               </form>
             </GlassyBackground>
           </Grid>
-          <Grid item alignSelf={"center"} sx={{mt: 3}}>
-            <Link
-              to="/"
-              className="links"
-            >
-              Already a User? Log In!
-            </Link>
-          </Grid>
+          
         </Grid>
       </Box>
     </>
   );
 };
 
-export default SignUp;
+export default ForgotPassword;

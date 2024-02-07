@@ -174,6 +174,9 @@ const Login = () => {
                 }}
                 fullWidth
               />
+              <Box component="div" sx={{width: '100%', textAlign: 'right'}}>
+              <Link className="forgot-password" to="/forgot-password">Forgot Password?</Link>
+              </Box>
               <br />
               <br />
               <StyledButton

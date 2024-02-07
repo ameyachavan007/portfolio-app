@@ -18,3 +18,8 @@ a.links:hover{
     border: 1px solid #ff2216;  
     text-align: center;
 }
+
+a.forgot-password {
+    font-size: small;
+    color: #64FFDA;
+}

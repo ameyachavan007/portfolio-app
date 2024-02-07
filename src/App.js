@@ -11,6 +11,7 @@ import { AuthProvider } from "./utils/auth";
 import { useAuth } from "./utils/auth";
 import { useEffect } from "react";
 import NotFound from "./components/NotFound";
+import ForgotPassword from "./components/ForgotPassword";
 
 const App = () => {
   const ProtectedRoute = ({ children }) => {
@@ -37,6 +38,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />}/>
           <Route
             path="/career-details"
             element={
