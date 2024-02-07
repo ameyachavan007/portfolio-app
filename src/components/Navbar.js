@@ -42,7 +42,7 @@ const Navbar = () => {
   if (user) {
     tabArray = [...tabArray, "Edit My Details", "Logout"];
   } else {
-    tabArray = [...tabArray, "Login"];
+    tabArray = [...tabArray, "Login To Your Profile"];
   }
 
   const handleLogout = () => {
@@ -64,7 +64,7 @@ const Navbar = () => {
                 to={
                   tab === "Edit My Details"
                     ? "/career-details"
-                    : tab === "Login"
+                    : tab === "Login To Your Profile"
                     ? "/"
                     : tab.toLowerCase().replace(/\s+/g, "-")
                 }
