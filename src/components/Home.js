@@ -113,6 +113,7 @@ const Home = () => {
                     >
                         Already a User? Log In!
                     </Link>
+                    <Box sx={{width: '1rem'}}></Box>
                     <Link
                         to="/signup"
                         className="links"

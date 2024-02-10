@@ -198,6 +198,7 @@ const Login = () => {
                     >
                         Visit Other Portfolios!
                     </Link>
+                    <Box sx={{width: '1rem'}}></Box>
                     <Link
                         to="/signup"
                         className="links"
