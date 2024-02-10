@@ -17,6 +17,15 @@ a.links:hover{
     padding: 0.5rem;
     border: 1px solid #ff2216;  
     text-align: center;
+    margin-bottom: 1rem;
+}
+
+.success {
+    color: #1eff00;
+    padding: 0.5rem;
+    border: 1px solid #1eff00;  
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
 a.forgot-password {

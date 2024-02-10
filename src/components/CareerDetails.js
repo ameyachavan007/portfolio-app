@@ -31,20 +31,13 @@ import {
   StyledButton,
   InputTextField,
 } from "../shared/CustomComponents";
-import { useDispatch, useSelector } from "react-redux";
-import { setAllDetails } from "../redux/userSlice";
 import { useAuth } from "../utils/auth";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const steps = ["Personal Details", "About", "Projects", "Experiences"];
 const CareerDetails = () => {
   const history = useNavigate();
-  const dispatch = useDispatch();
   const { login, user } = useAuth();
-  const userDataRedux = useSelector((state) => state.userData);
-  const emailRedux = useSelector((state) => state.userData.email);
-  const passwordRedux = useSelector((state) => state.userData.password);
-  const usernameRedux = useSelector((state) => state.userData.username);
   const [activeStep, setActiveStep] = useState(0);
   const [error, setError] = useState("");
 
@@ -169,7 +162,7 @@ const CareerDetails = () => {
     try {
       const response = await axios.post(baseURL, {
         user: {
-          username: user.username,
+          username: user.username.trim().toLowerCase(),
           email: user.email,
           password: user.password,
           ...updatedFields,
@@ -825,11 +818,11 @@ const CareerDetails = () => {
               {renderResponsibilities(index)}
 
               {index === 0 ? (
-                                <StyledButton onClick={() => removeProject(index)} disabled>
+                                <StyledButton onClick={() => removeExperience(index)} disabled>
                                     Remove Experience
                                 </StyledButton>
                             ) : (
-                                <StyledButton onClick={() => removeProject(index)}>
+                                <StyledButton onClick={() => removeExperience(index)}>
                                     Remove Experience
                                 </StyledButton>
                 )}

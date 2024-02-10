@@ -85,7 +85,7 @@ const ForgotPassword = () => {
       const { message } = response.data;
       if (message === "Password updated successfully") {
         setTimeout(() => {
-          history("/");
+          history("/login");
         }, 2000); 
       }
       
@@ -100,7 +100,7 @@ const ForgotPassword = () => {
         setError("User already exists exists. Redirecting to login...");
         // Redirect to signup page after a delay
         setTimeout(() => {
-          history("/");
+          history("/login");
         }, 2000); // 2 seconds delay
       } else if (
         error.response &&

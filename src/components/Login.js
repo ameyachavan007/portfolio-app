@@ -112,7 +112,7 @@ const Login = () => {
         justifyContent: "center",
         alignItems: "center",
         // background:'linear-gradient(to right bottom, #430089, #82ffa1)'
-        background: 'linear-gradient(to right bottom, #1C2336, #0F172A)'
+        background: 'linear-gradient(to right bottom, #2D394D, #0F172A)'
       }}
     >
       <Grid container xs={10} sm={8} md={6} lg={4} direction={"column"}>
@@ -189,14 +189,24 @@ const Login = () => {
             </form>
           </GlassyBackground>
         </Grid>
-        <Grid item alignSelf={"center"} sx={{mt: 3}}>
-          <Link
-            to="/signup"
-            className="links"
-          >
-            New User? Create Account
-          </Link>
-        </Grid>
+        <Grid item xs={12}>
+                <Box sx={{display:'flex', width: '100%', justifyContent:'space-between', mt:2}}>
+                    <Link
+                        to="/"
+                        className="links"
+                        sx={{mr: 1}}
+                    >
+                        Visit Other Portfolios!
+                    </Link>
+                    <Link
+                        to="/signup"
+                        className="links"
+                        sx={{ml:1}}
+                    >
+                        New User? Create Account
+                    </Link>
+                </Box>
+            </Grid>
       </Grid>
     </Box>
   );

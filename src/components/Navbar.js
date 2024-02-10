@@ -47,7 +47,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
-    history("/");
+    history("/login");
   };
 
   return (

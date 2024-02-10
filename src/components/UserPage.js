@@ -4,15 +4,11 @@ import Navbar from "./Navbar";
 import SocialLinks from "./SocialLinks";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setAllDetails } from "../redux/userSlice";
 import { Outlet } from "react-router-dom";
 
 const UserPage = () => {
   const { userName } = useParams();
-  const dispatch = useDispatch();
   const history = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -42,12 +38,13 @@ const UserPage = () => {
         console.error("Error fetching user data: ", error);
         setModalOpen(true);
         setTimeout(() => {
-          history("/");
+          history("/login");
         }, 5000);
       }
     };
 
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   // Modal style
@@ -79,7 +76,7 @@ const UserPage = () => {
   return (
     <Box
       component="div"
-      sx={{ height: "100%" }}
+      sx={{ height: "100%", }}
       display={"flex"}
       justifyContent={"center"}
     >

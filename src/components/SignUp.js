@@ -100,7 +100,7 @@ const SignUp = () => {
         setError("User already exists exists. Redirecting to login...");
         // Redirect to signup page after a delay
         setTimeout(() => {
-          history("/");
+          history("/login");
         }, 2000); // 2 seconds delay
       } else if (
         error.response &&
@@ -158,6 +158,7 @@ const SignUp = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          background: 'linear-gradient(to right bottom, #2D394D, #0F172A)'  
         }}
       >
         <Grid container xs={10} sm={8} md={6} lg={4} direction={"column"}>
@@ -269,7 +270,7 @@ const SignUp = () => {
           </Grid>
           <Grid item alignSelf={"center"} sx={{mt: 3}}>
             <Link
-              to="/"
+              to="/login"
               className="links"
             >
               Already a User? Log In!

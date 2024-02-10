@@ -12,6 +12,7 @@ import { useAuth } from "./utils/auth";
 import { useEffect } from "react";
 import NotFound from "./components/NotFound";
 import ForgotPassword from "./components/ForgotPassword";
+import Home from "./components/Home";
 
 const App = () => {
   const ProtectedRoute = ({ children }) => {
@@ -20,7 +21,7 @@ const App = () => {
 
     useEffect(() => {
       if (!user) {
-        history("/");
+        history("/login");
       }
     }, [user, history]);
 
@@ -36,7 +37,8 @@ const App = () => {
     <AuthProvider>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Home/>} />
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />}/>
           <Route
