@@ -13,7 +13,7 @@ const NotFound = () => {
                 The page you are looking for does not exist.
             </Typography>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Link to="/">
+                <Link to="/login">
                     <Button variant="contained" color="primary">
                         Go to Login Page
                     </Button>

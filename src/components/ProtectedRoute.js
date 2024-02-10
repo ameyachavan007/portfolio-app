@@ -8,7 +8,7 @@ const ProtectedRoute = ({ path, element: Component }) => {
   return (
     <Route
       path={path}
-      element={isAuthenticated ? <Component /> : <Navigate to="/" replace />}
+      element={isAuthenticated ? <Component /> : <Navigate to="/login" replace />}
     />
   );
 };
