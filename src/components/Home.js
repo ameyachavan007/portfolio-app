@@ -19,7 +19,9 @@ const Home = () => {
     const handleVisitSubmit = async  (event) => {
         event.preventDefault();
 
-        const visitURL = 'http://localhost:8080/home';
+        const visitURL = 
+        // 'http://localhost:8080/home';
+        "https://portfolio-server-smoky-six.vercel.app/home";
          try {
             let response = await axios.post(visitURL, {username: visit});
             if(response.data.message === "Username exists"){
