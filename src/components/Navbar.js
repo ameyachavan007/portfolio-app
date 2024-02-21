@@ -1,5 +1,5 @@
 import { Grid, Box, Button } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { useAuth } from "../utils/auth";
@@ -12,6 +12,20 @@ const Navbar = () => {
   const location = useLocation();
   const currentPath = location.pathname;
   const { userName } = useParams();
+  // State to manage the copy status
+  const [copySuccess, setCopySuccess] = useState(false);
+
+  const profileLink = `https://portfolio-app-zeta-five.vercel.app/${userName}`;
+
+  // Function to handle copying the profile link
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(profileLink)
+      .then(() => {
+        setCopySuccess(true);
+        setTimeout(() => setCopySuccess(false), 3000); // Reset copy status after 3 seconds
+      })
+      .catch((err) => console.error("Failed to copy:", err));
+  };
 
   const HoverLine = styled("div")({
     backgroundColor: "#D6DEEF",
@@ -65,9 +79,9 @@ const Navbar = () => {
                 component={NavLink}
                 to={"/"}
                 className="nav-link"
-                sx={{color: "#1eff00", fontSize: '1rem'}}
+                sx={{color: "#1eff00", fontSize: '1rem', mt: 1}}
               >
-                Login / Build Your Profile!!
+                Login / Build Your Portfolio!!
               </Button>
             ) : (
               <NavLink
@@ -87,6 +101,11 @@ const Navbar = () => {
             )}
           </Grid>
         ))}
+         <Grid item className="nav-item" xs={12}>
+          <Button onClick={copyToClipboard} sx={{ color: "#FFA500", fontSize: '1rem',mb: 1}}>
+            {copySuccess ? "Copied!" : "Copy Your Portfolio Link"}
+          </Button>
+        </Grid>
       </Grid>
     </>
   );
