@@ -21,7 +21,6 @@ const Navbar = () => {
   });
 
   const navLinkStyles = ({ isActive }, tabName) => {
-    // Check if the current path ends with "/" and the tab is "About"
     const isAboutActive =
       (currentPath === `/${userName}` || currentPath === "/") &&
       tabName === "About";
@@ -38,17 +37,19 @@ const Navbar = () => {
   };
 
   let tabArray = ["About", "Projects", "Experience"];
-  // Define the tabs based on user login status
+
   if (user) {
     tabArray = [...tabArray, "Edit My Details", "Logout"];
   } else {
-    tabArray = [...tabArray, "Login To Your Profile"];
+    tabArray = [...tabArray, "Login"];
   }
 
   const handleLogout = () => {
     logout();
     history("/login");
   };
+
+  
 
   return (
     <>
@@ -59,13 +60,20 @@ const Navbar = () => {
               <Button onClick={handleLogout} style={{ color: "#D6DEEF" }}>
                 Logout
               </Button>
+            ) : tab === "Login" ? (
+              <Button
+                component={NavLink}
+                to={"/"}
+                className="nav-link"
+                sx={{color: "#1eff00", fontSize: '1rem'}}
+              >
+                Login / Build Your Profile!!
+              </Button>
             ) : (
               <NavLink
                 to={
                   tab === "Edit My Details"
                     ? "/career-details"
-                    : tab === "Login To Your Profile"
-                    ? "/"
                     : tab.toLowerCase().replace(/\s+/g, "-")
                 }
                 style={(props) => navLinkStyles(props, tab)}
