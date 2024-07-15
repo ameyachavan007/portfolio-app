@@ -62,7 +62,8 @@ const SocialLinks = () => {
   }
 
   return (
-    <Stack spacing={1} direction="row" sx={{ position: "absolute", bottom: 0 }}>
+    // <Stack spacing={1} direction="row" sx={{ position: "absolute", bottom: 0 }}>
+    <>
         {Object.entries(sLinks).map(([key, value]) => (
           value && (
             <IconButton
@@ -74,7 +75,8 @@ const SocialLinks = () => {
         </IconButton>
           )
         ))}
-    </Stack>
+        </>
+    // </Stack>
   );
 }
 

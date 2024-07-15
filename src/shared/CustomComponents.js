@@ -12,8 +12,12 @@ import {
   Radio,
   FormControlLabel,
 } from "@mui/material";
+import { borderRadius } from "@mui/system";
 
 export const formatDate = (dateString) => {
+  if (dateString === "" || dateString === null || dateString === undefined) {
+    return "Present";
+  }
   const months = [
     "Jan",
     "Feb",
@@ -47,7 +51,7 @@ export const StyledRadio = styled(Radio)({
 // Custom Styled FormControlLabel Component
 export const StyledFormControlLabel = styled(FormControlLabel)({
   "& .MuiFormLabel-label": {
-    color: "#a4a4a4", // Label color
+    color: "rgba(45,212,191,.6)", 
   },
   "&.Mui-focused": {
     color: "#a4a4a4", // Color when checked
@@ -86,49 +90,82 @@ export const StyledInputLabel = styled(InputLabel)({
   },
 });
 
+
 export const InputTextField = styled(TextField)(({ theme }) => ({
+  display: 'block',
+
+  "& textarea": {
+    color: "#D6DEEF",
+    [theme.breakpoints.down('sm')]: {
+      fontSize: "0.875rem",
+    },
+  },
+ 
   "& label": {
-    color: "#a4a4a4",
+    color: "rgba(45,212,191,.6)",
   },
   "&:hover label": {
-    color: "white",
+    color: "rgb(94 234 212)",
   },
   "& label.Mui-focused": {
-    color: "white",
+    color: "rgb(94 234 212)",
   },
   "& .MuiOutlinedInput-root": {
+    "& input": {
+      color: "#D6DEEF",
+      
+    },
     "& fieldset": {
-      borderColor: "#a4a4a4",
+      border: '1px solid rgba(45,212,191,.1)',
+      borderRadius: '1rem'
     },
     "&:hover fieldset": {
-      borderColor: "white",
+      borderColor: "rgba(45,212,191,.7)",
     },
     "&.Mui-focused fieldset": {
-      borderColor: "white",
+      borderColor: "rgba(45,212,191,.7)",
     },
   },
-  // Responsive styles
-  [theme.breakpoints.down("xs")]: {
-    width: "100%", // Full width on extra small devices
-    "& .MuiInputBase-input": {
-      fontSize: "0.875rem", // Smaller font size on extra small devices
-    },
-    "& .MuiInputLabel-root": {
-      fontSize: "0.875rem", // Smaller label size
-    },
+  '& input[type="date"]::-webkit-calendar-picker-indicator' :  {
+    cursor: 'pointer',
+    filter: 'invert(1)'
   },
+  [theme.breakpoints.down('sm')]: {
+    "& label": {
+      fontSize: '0.875rem',
+    },
+    "& .MuiOutlinedInput-root": {
+      "& input": {
+        fontSize: '0.875rem'
+        
+      },
+    } 
+  }
 }));
 
 // Custom Styled StepLabel Component
 export const StepLabels = styled(StepLabel)(({ theme }) => ({
+  // fontSize: '2rem',
   "& .MuiStepLabel-label.Mui-active": {
     color: "white",
   },
+
   "& .MuiStepLabel-label": {
     color: "#a4a4a4",
+    fontSize: '1rem'
   },
   "& .MuiStepLabel-label.Mui-completed": {
-    color: "white",
+    color: "rgb(94 234 212)",
+  },
+  "& .MuiStepLabel-iconContainer": {
+    "& svg": {
+      color: 'rgba(45,212,191,.1)'  
+    }   
+  },
+  "& .MuiStepLabel-iconContainer.Mui-completed": {
+     "& svg": {
+        color: 'rgb(94 234 212)'  
+     }
   },
   // Responsive styles
   [theme.breakpoints.down("xs")]: {
@@ -141,31 +178,27 @@ export const StepLabels = styled(StepLabel)(({ theme }) => ({
 
 // Custom Styled Stepper Component
 export const GlassyStepper = styled(Stepper)(({ theme }) => ({
-  background: "rgba(255, 255, 255, 0.2)",
-  backdropFilter: "blur(10px)",
-  borderRadius: "10px",
-  padding: "10px",
-  // margin: "1rem",
-  width: "auto",
-  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  // // Responsive styles
-  // [theme.breakpoints.down("xs")]: {
-  //   flexDirection: "column",
-  //   p: "5px",
-  //   "& .MuiStepIcon-root": {
-  //     width: "20px",
-  //     height: "20px",
-  //   },
-  //   "& .MuiSvgIcon-root": {
-  //     fontSize: "1rem",
-  //   },
-  //   "& .MuiStepIcon-root": {
-  //     fontSize: "1rem",
-  //   },
-  //   "& .MuiStepLabel-label": {
-  //     fontSize: "0.75rem",
-  //   },
-  // },
+  padding: '1rem',
+  border: '1px solid rgba(45,212,191,.5)',
+  borderRadius: '1rem',
+  '& .MuiStepConnector-root': {
+    '& .MuiStepConnector-line': {
+      borderColor: 'transparent',
+      width: 0
+    },
+  },
+  '& .MuiStepConnector-root.Mui-completed .MuiStepConnector-line': {
+    borderColor: 'rgb(94, 234, 212)',
+    width: '100%'
+  },
+  '& .MuiStepConnector-root.Mui-active .MuiStepConnector-line': {
+    borderColor: 'rgb(94, 234, 212)',
+    width: '100%',
+    transition: 'width 0.5s ease-in-out',
+  },
+  '& .MuiStepConnector-root.Mui-disabled .MuiStepConnector-line': {
+    borderColor: 'rgba(0, 0, 0, 0.12)',
+  },
 }));
 
 export const GlassyBackground = styled(Box)({
@@ -178,11 +211,17 @@ export const GlassyBackground = styled(Box)({
   overflow: 'hidden',
 });
 
-export const StyledButton = styled(Button)({
-  backgroundColor: "#007bff", // Example color
-  color: "white",
-  "&:hover": {
-    backgroundColor: "#0056b3", // Darker shade on hover
+export const StyledButton = styled(Button)(({ theme }) => ({
+  backgroundColor: 'rgba(45,212,191,.1)',
+  color: 'rgb(94 234 212)',
+  textTransform: "none",
+  borderRadius: '1rem',
+  '& span': {
+    margin: 0,
+    padding: 0
   },
-  margin: "10px",
-});
+  [theme.breakpoints.down('sm')]: { 
+      fontSize: '0.75rem',
+
+  }
+}));
