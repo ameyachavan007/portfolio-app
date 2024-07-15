@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Grid, Chip } from "@mui/material";
+import { Box, Typography, Grid, Chip, useMediaQuery, Tooltip } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { useTheme } from "@emotion/react";
+import CircleIcon from '@mui/icons-material/Circle';
 
 const Projects = () => {
   const { userName } = useParams();
@@ -10,6 +12,8 @@ const Projects = () => {
   // const baseURL = `http://localhost:8080/${userName}/projects`;
   const baseURL = `https://portfolio-server-smoky-six.vercel.app/${userName}/projects`;
   const [projects, setProjects] = useState([]);
+  const theme = useTheme();
+  const isAboveMedium = useMediaQuery(theme.breakpoints.up('md'));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,11 +40,10 @@ const Projects = () => {
         label={skill}
         sx={{
           margin: "0.2rem",
-          border: `1px solid #64FFDA`,
-          color: "#64FFDA",
+          backgroundColor: "rgba(45,212,191,.1)",
           "& .MuiChip-label": {
             // Target the label specifically
-            color: "#64FFDA",
+            color: "rgb(94 234 212)",
           },
         }}
       />
@@ -49,50 +52,70 @@ const Projects = () => {
 
   return (
     <Box>
+      {!isAboveMedium && <Typography
+        variant="h2"
+        sx={{
+          color: "#D6DEEF",
+          fontSize: "1rem",
+          fontWeight: "bold",
+          // mb: "2rem",
+          position: "-webkit-sticky",
+          position: "sticky",
+          top: 0,
+          zIndex: 10,
+          backgroundColor: 'rgba(15,23,42,.75)',
+          backdropFilter: "blur(8px)",
+          p: '1.25rem 0',
+          textTransform: 'uppercase'
+        }}
+        gutterBottom
+      >
+        Projects
+      </Typography>}
       {projects.map((project, index) => (
         <Box
-          key={index}
-          sx={{
-            mb: "2rem",
-            backgroundColor: "rgba(255, 255, 255, 0.05)", // Semi-transparent white
-            borderRadius: "10px", // Rounded corners
-            backdropFilter: "blur(5px)", // Creates the frosted glass effect
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Optional: adds a subtle shadow
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            p: "1rem",
-            ml: { xs: "0.5rem" },
-            mr: { xs: "0.5rem" },
-          }}
-        >
+        key={index}
+        xs={12}
+        sx={{ 
+          inset: '4px',
+          borderRadius: '0.25rem',
+          '&:hover': {
+            cursor: 'pointer',
+            backgroundColor: 'rgba(39, 43, 52, 0.5)',
+            boxShadow: 'inset 0 1px 0 0 rgba(148, 163, 184, 0.1)',
+            '&:after': {
+              boxShadow: '0 0 0 3px rgba(39, 43, 52, 0.5)', 
+            }
+          },
+          p: isAboveMedium ? 2 : 1,
+          mb: 6
+         }}
+      >
           <Grid container xs={12}>
             <Grid item xs={12}>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  variant="h4"
-                  sx={{
-                    color: "#D6DEEF",
-                    fontSize: "1.2rem",
-                    fontWeight: "bold",
-                    mr: "0.5rem",
-                  }}
-                  gutterBottom
-                >
-                  {project.title}
-                </Typography>
-                <Box
-                  sx={{
+              <div style={{ display: 'flex', alignItems: 'center'}}>
+                <div>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      color: "#D6DEEF",
+                      fontSize: "1rem",
+                      mr: "0.5rem",
+                    }}
+                    gutterBottom
+                  >
+                    {project.title}
+                  </Typography>
+                </div>
+                {isAboveMedium ? (<div
+                  style={{
                     border:
                       project.status === "completed"
                         ? "1px solid  #1eff00"
                         : "1px solid  #FFA500",
                     color:
                       project.status === "completed" ? "#1eff00" : "#FFA500",
-                    p: "0.4rem",
+                    padding: "0.4rem",
                     fontSize: "0.6rem",
                     borderRadius: "30px",
                     display: "flex",
@@ -101,10 +124,25 @@ const Projects = () => {
                   {project.status === "in-progress"
                     ? "In Progress"
                     : "Completed"}
-                </Box>
-                <Box sx={{ flex: "1 1 auto" }}></Box>
+                </div>) :
+                 (
+                  <div>
+                    <Tooltip title={project.status === "in-progress" ? "In Progress" : "Completed"}>
+                      <CircleIcon 
+                        sx={{
+                          fontSize: '0.7rem',
+                          m:1,
+                          color:
+                          project.status === "completed" ? "#1eff00" : "#FFA500",
+                        }}
+                      />
+                    </Tooltip>
+                  </div>
+                 )
+                }
+                <div style={{ flex: "1 1 auto" }}></div>
                 {project.projectLink !== "#" && (
-                <Box>
+                <div>
                   <a
                     style={{ textDecoration: "underline", fontWeight: "500" }}
                     href={project.projectLink}
@@ -116,13 +154,13 @@ const Projects = () => {
                       sx={{ color: "#64FFDA" }}
                     />
                   </a>
-                </Box>
+                </div>
                 )}
-              </Box>
+              </div>
             </Grid>
             <Grid item xs={12}>
               <Typography
-                sx={{ color: "#8F9DB3", fontSize: "1rem", mt: "2rem" }}
+                sx={{ color: "#8F9DB3", fontSize: "1rem", mt: "1rem" }}
               >
                 {project.description}
               </Typography>

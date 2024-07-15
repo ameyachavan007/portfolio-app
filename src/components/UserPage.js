@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Grid, Typography, Box, Modal, CircularProgress } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import { Grid, Typography, Box, Modal, CircularProgress, useMediaQuery, Container } from "@mui/material";
 import Navbar from "./Navbar";
 import SocialLinks from "./SocialLinks";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import { useTheme } from "@emotion/react";
+import UserPI from "./UserPI";
+import About from "./About";
+import Experiences from "./Experiences";
+import Projects from "./Projects";
 
 const UserPage = () => {
+  const theme = useTheme();
+  const isAboveMedium = useMediaQuery("(min-width: 1025px)");
   const { userName } = useParams();
   const history = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
@@ -17,6 +24,20 @@ const UserPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   // const url = `http://localhost:8080/${userName}`;
+
+  // Refs for sections
+  const aboutRef = useRef(null);
+  const projectsRef = useRef(null);
+  const experiencesRef = useRef(null);
+
+  const scrollToSection = (ref) => {
+    if (ref.current) {
+      ref.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,89 +95,60 @@ const UserPage = () => {
   }
 
   return (
+    // <Container padding={0} margin={0} overflow={'hidden'}>
     <Box
       component="div"
-      sx={{ height: "100%", }}
+      sx={{ padding: !isAboveMedium && '0.5rem' }}
       display={"flex"}
       justifyContent={"center"}
     >
-      <Grid container lg={8}>
-        <Modal
-          open={modalOpen}
-          onClose={() => setModalOpen(false)}
-          aria-labelledby="modal-title"
-          aria-describedby="modal-description"
+    <Grid container lg={10} spacing={8}>
+    <Grid item xs={12} lg={5} >
+      <Box component={'div'} sx={{ display: 'flex', flexDirection: 'column', justifyContent: isAboveMedium && 'space-between', height: isAboveMedium ? '100vh' : 'auto', }}>
+        <Box component={'div'} sx={{ display: 'flex', color: 'white', flexDirection: 'column', padding: isAboveMedium && '1rem', margin: isAboveMedium ? '4rem' : '0.5rem'}}>
+          <UserPI firstName={firstName} lastName={lastName} tag={tag}/>
+            <div style={{ marginTop: '4rem' }}>
+            <Navbar
+                  aboutRef={aboutRef}
+                  projectsRef={projectsRef}
+                  experiencesRef={experiencesRef}
+                  scrollToSection={scrollToSection}
+                />
+            </div>
+        </Box>
+        <Box component={'div'} sx={{ display:'flex', padding: isAboveMedium && '1rem', margin: isAboveMedium ? '4rem' : '0.5rem'}}>
+          <SocialLinks/>
+        </Box>
+      </Box>
+    </Grid>
+    <Grid item xs={12} lg={7}>
+      <div>
+        <div 
+          style={ 
+            isAboveMedium ? {
+            maxHeight: '100vh', 
+            overflowY: 'auto',   
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch',   
+            margin: "4rem 0rem"
+          } : {margin: "0.5rem"}}
         >
-          <Box sx={style}>
-            <Typography id="modal-title" variant="h6" component="h2">
-              Redirecting to Career Details
-            </Typography>
-            <Typography id="modal-description" sx={{ mt: 2 }}>
-              We do not have your details to build your portfolio, redirecting
-              you to career details page.
-            </Typography>
-          </Box>
-        </Modal>
-        <Grid item container lg={5} sx={{ mt: "5rem", mb: "5rem" }}>
-          <Grid
-            item
-            xs={12}
-            sx={{ ml: { xs: "0.5rem" }, mr: { xs: "0.5rem" } }}
-          >
-            <Typography
-              variant="h3"
-              sx={{ color: "#D6DEEF", fontWeight: "bold" }}
-            >
-              {firstName} {lastName}
-            </Typography>
-            <Typography
-              variant="body1"
-              gutterBottom
-              sx={{ color: "#8F9DB3", mt: "1rem" }}
-            >
-              {tag}
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sx={{
-              mt: { xs: "2rem" },
-              mb: { xs: "2.5rem" },
-              ml: { xs: "0.5rem" },
-            }}
-          >
-            <Navbar />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sx={{ position: "relative", mt: { xs: "2.5rem" } }}
-          >
-            <SocialLinks />
-          </Grid>
-        </Grid>
-        <Grid
-          item
-          container
-          lg={7}
-          sx={{
-            mt: "5rem",
-            mb: "5rem",
-            height: "calc(100vh - 10rem)",
-            overflowY: "auto",
-            "&::-webkit-scrollbar": {
-              width: "0px",
-            },
-            scrollbarWidth: "none", // For Firefox
-          }}
-        >
-          <Grid item>
-            <Outlet />
-          </Grid>
-        </Grid>
-      </Grid>
-    </Box>
+          <section id="about" ref={aboutRef} style={{ marginBottom: '4rem'}}>
+            <About/>
+          </section>
+          <section id="experiences" ref={experiencesRef} style={{ marginBottom: '4rem'}}>
+            <Experiences/>
+          </section>
+          <section id="projects" ref={projectsRef}>
+            <Projects/>
+          </section>
+        </div>
+      </div>
+    </Grid>
+  </Grid>
+  {/* </Container> */}
+  </Box>
   );
 };
 

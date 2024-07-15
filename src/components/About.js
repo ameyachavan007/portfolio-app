@@ -11,7 +11,7 @@ const About = () => {
   const [aboutData, setAboutData] = useState("");
 
   const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const isAboveMedium = useMediaQuery(theme.breakpoints.up('md'));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,27 +33,36 @@ const About = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "rgba(255, 255, 255, 0.05)", // Semi-transparent white
-        borderRadius: "10px", // Rounded corners
-        backdropFilter: "blur(5px)", // Creates the frosted glass effect
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Optional: adds a subtle shadow
-        border: "1px solid rgba(255, 255, 255, 0.1)",
-        p: "1rem",
-        m: isLargeScreen ? 0 : 2,
+        
+        // backgroundColor: "rgba(255, 255, 255, 0.05)", // Semi-transparent white
+        // borderRadius: "10px", // Rounded corners
+        // backdropFilter: "blur(5px)", // Creates the frosted glass effect
+        // boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Optional: adds a subtle shadow
+        // border: "1px solid rgba(255, 255, 255, 0.1)",
+        p: isAboveMedium && "1rem",
+        // m: isLargeScreen ? 0 : 2,
       }}
     >
-      <Typography
-        variant="h4"
+      {!isAboveMedium && <Typography
+        variant="h2"
         sx={{
           color: "#D6DEEF",
-          fontSize: "1.2rem",
+          fontSize: "1rem",
           fontWeight: "bold",
-          mb: "2rem",
+          // mb: "2rem",
+          position: "-webkit-sticky",
+          position: "sticky",
+          top: 0,
+          zIndex: 10,
+          backgroundColor: 'rgba(15,23,42,.75)',
+          backdropFilter: "blur(8px)",
+          p: '1.25rem 0',
+          textTransform: 'uppercase'
         }}
         gutterBottom
       >
-        About me and my journey so far...
-      </Typography>
+        About
+      </Typography>}
       <Typography
         variant="body1"
         sx={{

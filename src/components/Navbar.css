@@ -7,3 +7,16 @@
 .hover-line {
     transition: all 0.3s ease;
 }
+
+@keyframes pulse {
+    0% {
+      border-color: rgba(36, 219, 219, 0.4);
+    }
+    50% {
+      border-color: rgba(36, 219, 219, 0.8);
+    }
+    100% {
+      border-color: rgba(36, 219, 219, 0.4);
+    }
+  }
+  

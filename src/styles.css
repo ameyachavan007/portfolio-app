@@ -1,11 +1,27 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  
 }
 
-body{
-  font-family: 'Poppins', sans-serif;
+body, html{
+  font-family: 'Inter', sans-serif;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialised;
+  scrollbar-width: none;
+  -ms-overflow-style: 'none';
+  -webkit-scrollbar: 'none';
+  -webkit-overflow-scrolling: 'touch';
+}
+
+html{
+  line-height: 1.5;
 }
 .App {
-  background-color: #0F172A; /* Dark background */
+  background-color: rgb(15, 23, 42) /* Dark background */
+ 
 }
